@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - ./.env
+    volumes:
+      - betdevel_delivery_data:/var/lib/postgres
+
+  backend:
+    build: ./
+    restart: always
+    depends_on:
+      - database
+    env_file:
+      - ./.env
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  betdevel_delivery_data:

@@ -1,0 +1,2 @@
+yarn commitlint
+yarn cspell:commit-msg -- $1
