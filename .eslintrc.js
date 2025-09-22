@@ -23,6 +23,7 @@ module.exports = {
 		],
 		'@typescript-eslint/lines-between-class-members': 0,
 		'@typescript-eslint/no-extraneous-class': [2, { allowWithDecorator: true }],
+		'import/no-extraneous-dependencies': 0,
 		'@typescript-eslint/require-await': 0,
 		'import/prefer-default-export': 0,
 		'import/no-cycle': 0,
