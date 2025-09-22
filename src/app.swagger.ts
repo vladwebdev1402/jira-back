@@ -6,6 +6,7 @@ export const initSwagger = (app: INestApplication) => {
 		.setTitle('JIRA API')
 		.setDescription('The Jira API description')
 		.setVersion('1.0')
+		.addBearerAuth()
 		.addServer('/')
 		.addServer('/api')
 		.build();

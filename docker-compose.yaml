@@ -11,7 +11,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - betdevel_delivery_data:/var/lib/postgres
+      - jira_data:/var/lib/postgres
 
   backend:
     build: ./
@@ -27,4 +27,4 @@ services:
       - /app/node_modules
 
 volumes:
-  betdevel_delivery_data:
+  jira_data:

@@ -1,9 +1,11 @@
 # libs
 commitlint
+bullmq
+dotenv
 
 # brand
-betdevel
+jira
 
 # other
-dotenv
 pids
+dtos
