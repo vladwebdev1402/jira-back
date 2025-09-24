@@ -11,6 +11,7 @@ import { AuthController } from './auth.controller';
 import { AuthConsumer } from './auth.consumer';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
 	imports: [
@@ -21,7 +22,7 @@ import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 		UserRepositoryModule,
 		SessionRepositoryModule,
 	],
-	providers: [AuthService, AuthConsumer, JwtStrategy, JwtRefreshStrategy],
+	providers: [AuthService, AuthConsumer, JwtStrategy, JwtRefreshStrategy, GoogleStrategy],
 	controllers: [AuthController],
 })
 export class AuthModule {}

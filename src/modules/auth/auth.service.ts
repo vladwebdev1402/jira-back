@@ -1,5 +1,5 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import * as ms from 'ms';
 import { Cache } from 'cache-manager';
 import { CACHE_KEYS, CACHE_TTL } from 'common/constants/cache';
@@ -16,6 +16,7 @@ import { UserEntity } from 'core/orm/entities/user/user.entity';
 import { AuthCache } from './types/auth-cache';
 import { AuthLoginEmailResponseDto } from './dtos/auth-login-email-response.dto';
 import { AuthLoginOtpDto } from './dtos/auth-login-otp.dto';
+import { AuthOAuthProfile } from './types/auth-oauth-profile';
 
 @Injectable()
 export class AuthService {
@@ -70,6 +71,21 @@ export class AuthService {
 		let user = await this.userRepository.getByEmail(email);
 
 		if (!user) user = await this.userRepository.create({ email });
+
+		return this.createTokens(user);
+	}
+
+	async loginOAuth(profile: AuthOAuthProfile) {
+		let user = await this.userRepository.getByEmail(profile.email);
+
+		if (!user) {
+			user = await this.userRepository.create({
+				email: profile.email,
+				avatarUrl: profile.avatarUrl,
+				name: profile.name,
+				displayName: profile.name,
+			});
+		}
 
 		return this.createTokens(user);
 	}
@@ -133,7 +149,7 @@ export class AuthService {
 
 		const session = sessions.find((s) => compareSync(token, s.token));
 
-		if (!session) return;
+		if (!session) throw new ForbiddenException();
 
 		await this.sessionRepository.remove([session]);
 	}

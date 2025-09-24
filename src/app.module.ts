@@ -3,6 +3,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getBullMqConfig } from 'core/bull-mq/bull-mq.config';
@@ -11,6 +12,8 @@ import { getNodemailerConfig } from 'core/nodemailer/nodemailer.config';
 import { getOrmConfig } from 'core/orm/orm.config';
 import { getRedisConfig } from 'core/redis/redis.config';
 import { AuthModule } from 'modules/auth/auth.module';
+import { JwtAuthGuard } from 'modules/auth/guards/jwt.guard';
+import { ProfileModule } from 'modules/profile/profile.module';
 
 @Module({
 	imports: [
@@ -42,6 +45,13 @@ import { AuthModule } from 'modules/auth/auth.module';
 			useFactory: getJwtConfig,
 		}),
 		AuthModule,
+		ProfileModule,
+	],
+	providers: [
+		{
+			provide: APP_GUARD,
+			useClass: JwtAuthGuard,
+		},
 	],
 })
 export class AppModule {}
