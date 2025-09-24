@@ -1,0 +1,5 @@
+.env*
+.*ignore
+*.svg
+yarn.lock
+.cspell

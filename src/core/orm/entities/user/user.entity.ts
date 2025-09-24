@@ -14,7 +14,7 @@ export class UserEntity {
 	displayName: string;
 
 	@Column({ default: '' })
-	avatar: string;
+	avatarUrl: string;
 
 	@Column({ default: '' })
 	email: string;
