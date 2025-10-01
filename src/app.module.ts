@@ -9,7 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { getBullMqConfig } from 'core/bull-mq/bull-mq.config';
 import { getJwtConfig } from 'core/jwt/jwt.config';
 import { getNodemailerConfig } from 'core/nodemailer/nodemailer.config';
-import { getOrmConfig } from 'core/orm/orm.config';
+import { dataSource } from 'core/orm/orm.config';
 import { getRedisConfig } from 'core/redis/redis.config';
 import { AuthModule } from 'modules/auth/auth.module';
 import { JwtAuthGuard } from 'modules/auth/guards/jwt.guard';
@@ -18,10 +18,8 @@ import { ProfileModule } from 'modules/profile/profile.module';
 @Module({
 	imports: [
 		ConfigModule.forRoot(),
-		TypeOrmModule.forRootAsync({
-			imports: [ConfigModule],
-			inject: [ConfigService],
-			useFactory: getOrmConfig,
+		TypeOrmModule.forRoot({
+			...dataSource.options,
 		}),
 		CacheModule.registerAsync({
 			imports: [ConfigModule],
