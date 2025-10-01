@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   database:
-    image: postgres
+    image: postgres:latest
     restart: always
     environment:
       POSTGRES_DB: ${DB_DATABASE}
@@ -13,11 +13,18 @@ services:
     volumes:
       - jira_data:/var/lib/postgres
 
+  redis:
+    image: redis
+    restart: always
+    env_file:
+      - ./.env
+
   backend:
     build: ./
     restart: always
     depends_on:
       - database
+      - redis
     env_file:
       - ./.env
     ports:
