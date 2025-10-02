@@ -13,6 +13,7 @@ import { dataSource } from 'core/orm/orm.config';
 import { getRedisConfig } from 'core/redis/redis.config';
 import { AuthModule } from 'modules/auth/auth.module';
 import { JwtAuthGuard } from 'modules/auth/guards/jwt.guard';
+import { JobSpaceModule } from 'modules/job-space/job-space.module';
 import { ProfileModule } from 'modules/profile/profile.module';
 
 @Module({
@@ -44,6 +45,7 @@ import { ProfileModule } from 'modules/profile/profile.module';
 		}),
 		AuthModule,
 		ProfileModule,
+		JobSpaceModule,
 	],
 	providers: [
 		{
