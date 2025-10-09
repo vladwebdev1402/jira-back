@@ -18,6 +18,9 @@ export class UserJobSpaceEntity {
 	@Column({ default: false })
 	isCreator: boolean;
 
+	@Column({ default: false })
+	isGuest: boolean;
+
 	@Column({
 		type: 'enum',
 		enum: UserJobSpacePermission,

@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, FindOptionsWhere, In, Repository } from 'typeorm';
+import {
+	DeepPartial,
+	FindManyOptions,
+	FindOneOptions,
+	FindOptionsWhere,
+	Repository,
+} from 'typeorm';
 import {
 	USER_JOB_SPACE_PERMISSIONS_BY_ROLE,
 	UserJobSpacePermission,
@@ -13,6 +19,18 @@ export class UserJobSpaceRepository {
 	constructor(
 		@InjectRepository(UserJobSpaceEntity) private repository: Repository<UserJobSpaceEntity>,
 	) {}
+
+	async find(options: FindManyOptions<UserJobSpaceEntity>) {
+		return this.repository.find(options);
+	}
+
+	async findAndCount(options: FindManyOptions<UserJobSpaceEntity>) {
+		return this.repository.findAndCount(options);
+	}
+
+	async findOne(options: FindOneOptions<UserJobSpaceEntity>) {
+		return this.repository.findOne(options);
+	}
 
 	async create(data: DeepPartial<UserJobSpaceEntity>) {
 		return this.repository.save(data);
@@ -30,16 +48,13 @@ export class UserJobSpaceRepository {
 		permissions: UserJobSpacePermission[],
 		where: FindOptionsWhere<UserJobSpaceEntity>,
 	) {
-		const userJobSpace = await this.repository.findOne({
-			where: {
-				...where,
-				permissions: In(permissions),
-			},
-		});
+		const userJobSpace = await this.repository
+			.createQueryBuilder('userJobSpace')
+			.where(where)
+			.andWhere('userJobSpace.permissions @> :permissions', { permissions })
+			.getOne();
 
-		if (!userJobSpace) return false;
-
-		return true;
+		return !!userJobSpace;
 	}
 
 	async changeRole(role: UserJobSpaceRole, where: FindOptionsWhere<UserJobSpaceEntity>) {
