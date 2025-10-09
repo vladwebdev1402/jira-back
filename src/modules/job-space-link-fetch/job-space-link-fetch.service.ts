@@ -87,11 +87,15 @@ export class JobSpaceLinkFetchService {
 				},
 				jobSpace: {
 					id: dto.jobSpaceId,
+					users: {
+						isUnlinked: false,
+					},
 				},
 			},
 		});
 
-		if (existUser) throw new BadRequestException(CLIENT_ERRORS.jobSpaceLinkFetchUserExist);
+		if (existUser && !existUser.isUnlinked)
+			throw new BadRequestException(CLIENT_ERRORS.jobSpaceLinkFetchUserExist);
 
 		const requiredPermissions: UserJobSpacePermission[] = [];
 
@@ -172,6 +176,7 @@ export class JobSpaceLinkFetchService {
 			user: {
 				id: user.id,
 			},
+			isUnlinked: false,
 		});
 
 		return { success: true };
