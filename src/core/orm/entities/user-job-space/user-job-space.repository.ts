@@ -63,4 +63,24 @@ export class UserJobSpaceRepository {
 			permissions: USER_JOB_SPACE_PERMISSIONS_BY_ROLE[role],
 		});
 	}
+
+	getRequiredLinkPermissionsForRole = (role: UserJobSpaceRole): UserJobSpacePermission[] => {
+		const requiredPermissions: UserJobSpacePermission[] = [];
+
+		switch (role) {
+			case UserJobSpaceRole.developer:
+				requiredPermissions.push(UserJobSpacePermission.linkDeveloper);
+				break;
+			case UserJobSpaceRole.manager:
+				requiredPermissions.push(UserJobSpacePermission.linkManager);
+				break;
+			case UserJobSpaceRole.admin:
+				requiredPermissions.push(UserJobSpacePermission.linkAdmin);
+				break;
+			default:
+				break;
+		}
+
+		return requiredPermissions;
+	};
 }

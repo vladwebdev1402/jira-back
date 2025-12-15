@@ -16,6 +16,7 @@ import { JwtAuthGuard } from 'modules/auth/guards/jwt.guard';
 import { JobSpaceModule } from 'modules/job-space/job-space.module';
 import { ProfileModule } from 'modules/profile/profile.module';
 import { JobSpaceLinkFetchModule } from './modules/job-space-link-fetch/job-space-link-fetch.module';
+import { UserJobSpaceModule } from './modules/user-job-space/user-job-space.module';
 
 @Module({
 	imports: [
@@ -48,6 +49,7 @@ import { JobSpaceLinkFetchModule } from './modules/job-space-link-fetch/job-spac
 		ProfileModule,
 		JobSpaceModule,
 		JobSpaceLinkFetchModule,
+		UserJobSpaceModule,
 	],
 	providers: [
 		{

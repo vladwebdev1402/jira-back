@@ -97,14 +97,9 @@ export class JobSpaceLinkFetchService {
 		if (existUser && !existUser.isUnlinked)
 			throw new BadRequestException(CLIENT_ERRORS.jobSpaceLinkFetchUserExist);
 
-		const requiredPermissions: UserJobSpacePermission[] = [];
-
-		if (dto.role === UserJobSpaceRole.developer)
-			requiredPermissions.push(UserJobSpacePermission.linkDeveloper);
-		if (dto.role === UserJobSpaceRole.manager)
-			requiredPermissions.push(UserJobSpacePermission.linkManager);
-		if (dto.role === UserJobSpaceRole.admin)
-			requiredPermissions.push(UserJobSpacePermission.linkAdmin);
+		const requiredPermissions = this.userJobSpaceRepository.getRequiredLinkPermissionsForRole(
+			dto.role,
+		);
 
 		const isHavePermissions = await this.userJobSpaceRepository.havePermissions(
 			requiredPermissions,

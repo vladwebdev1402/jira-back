@@ -15,4 +15,7 @@ export const CLIENT_ERRORS = {
 	jobSpaceLinkFetchUserExist: 'job-space-link/user-exist-in-job-space',
 	jobSpaceLinkFetchExist: 'job-space-link/exist',
 	jobSpaceLinkFetchNotFound: 'job-space-link/not-found',
+
+	userJobSpaceNotLinked: 'user-job-space/not-linked',
+	userJobSpaceNotFound: 'user-job-space/not-found',
 };
