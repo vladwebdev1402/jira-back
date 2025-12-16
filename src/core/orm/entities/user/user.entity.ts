@@ -1,6 +1,8 @@
 import { UserRole } from 'common/enums/user-role';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SessionEntity } from '../session/session.entity';
+import { UserJobSpaceEntity } from '../user-job-space/user-job-space.entity';
+import { JobSpaceLinkFetchEntity } from '../job-space-link-fetch/job-space-link-fetch.entity';
 
 @Entity()
 export class UserEntity {
@@ -36,4 +38,10 @@ export class UserEntity {
 
 	@OneToMany(() => SessionEntity, (session) => session.user)
 	sessions: SessionEntity[];
+
+	@OneToMany(() => UserJobSpaceEntity, (jobSpace) => jobSpace.user)
+	jobSpaces: UserJobSpaceEntity[];
+
+	@OneToMany(() => JobSpaceLinkFetchEntity, (jobSpaceLink) => jobSpaceLink.creatorUser)
+	createdJobSpaceLinkFetches: JobSpaceLinkFetchEntity[];
 }

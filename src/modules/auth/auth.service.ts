@@ -118,7 +118,7 @@ export class AuthService {
 
 	async createTokens(user: UserEntity) {
 		const accessToken = this.jwtService.sign(
-			{ id: user.id, role: user.role },
+			{ id: user.id, role: user.role, email: user.email },
 			{
 				expiresIn: this.configService.getOrThrow('JWT_ACCESS_EXP'),
 				secret: this.configService.getOrThrow('JWT_ACCESS_SECRET'),
@@ -126,7 +126,7 @@ export class AuthService {
 		);
 
 		const refreshToken = this.jwtService.sign(
-			{ id: user.id, role: user.role },
+			{ id: user.id, role: user.role, email: user.email },
 			{
 				expiresIn: this.configService.getOrThrow('JWT_REFRESH_EXP'),
 				secret: this.configService.getOrThrow('JWT_REFRESH_SECRET'),

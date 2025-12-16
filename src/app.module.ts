@@ -13,7 +13,10 @@ import { dataSource } from 'core/orm/orm.config';
 import { getRedisConfig } from 'core/redis/redis.config';
 import { AuthModule } from 'modules/auth/auth.module';
 import { JwtAuthGuard } from 'modules/auth/guards/jwt.guard';
+import { JobSpaceModule } from 'modules/job-space/job-space.module';
 import { ProfileModule } from 'modules/profile/profile.module';
+import { JobSpaceLinkFetchModule } from './modules/job-space-link-fetch/job-space-link-fetch.module';
+import { UserJobSpaceModule } from './modules/user-job-space/user-job-space.module';
 
 @Module({
 	imports: [
@@ -44,6 +47,9 @@ import { ProfileModule } from 'modules/profile/profile.module';
 		}),
 		AuthModule,
 		ProfileModule,
+		JobSpaceModule,
+		JobSpaceLinkFetchModule,
+		UserJobSpaceModule,
 	],
 	providers: [
 		{
